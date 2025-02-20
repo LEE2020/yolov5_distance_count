@@ -36,7 +36,7 @@ import camera_configs
 #     P2=P2
 # )
 SGBM_blockSize = 5 #一个匹配块的大小,大于1的奇数
-SGBM_num=2
+SGBM_num=2  #视差范围
 min_disp = 0   #最小的视差值，通常情况下为0
 num_disp =SGBM_num * 16 #192 - min_disp #视差范围，即最大视差值和最小视差值之差，必须是16的倍数。
 #blockSize = blockSize #匹配块大小（SADWindowSize），必须是大于等于1的奇数，一般为3~11
