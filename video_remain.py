@@ -42,7 +42,7 @@ half = device.type != True  # half precision only supported on CUDA
 half = False
 model = attempt_load('yolov5s.pt', map_location=device)  # load FP32 model
 #imgsz = check_img_size(640, s=model.stride.max())  # check img_size
-imgsz = check_img_size(2560, s=model.stride.max())  # check img_size
+imgsz = check_img_size(1280, s=model.stride.max())  # check img_size
 if half:
     model.half()  # to FP16
 
@@ -153,9 +153,9 @@ while(True):
                 for *xyxy, conf, cls in reversed(det):
                     x = ((xyxy[2]-xyxy[0])/2)+xyxy[0]
                     y = ((xyxy[3]-xyxy[1])/2)+xyxy[1]
-                    if(x<192):
+                    if(x<640*0.3):
                         pos='left'
-                    elif((x<448) and (x>192)):
+                    elif((640*0.7) and (x>640*0.3)):
                         pos='mid'
                     else:
                         pos='right'
