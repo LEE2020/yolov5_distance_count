@@ -8,4 +8,3 @@ model = YOLO('yolov5s.pt')  # load a pretrained model (recommended for training)
 # Train the model
 results = model.train(data='self-seg.yaml', epochs=5, imgsz=640, workers=0,patience=10,batch=32)
 # esults = model.train(data='self-seg.yaml', epochs=100)
-

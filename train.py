@@ -31,7 +31,12 @@ from utils.google_utils import attempt_download
 from utils.loss import compute_loss
 from utils.plots import plot_images, plot_labels, plot_results, plot_evolution
 from utils.torch_utils import ModelEMA, select_device, intersect_dicts, torch_distributed_zero_first
-torch.cuda.set_device(0)
+#torch.cuda.set_device(1)
+torch.cuda.init()
+
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+
 logger = logging.getLogger(__name__)
 
 try:
@@ -216,7 +221,7 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
     model.nc = nc  # attach number of classes to model
     model.hyp = hyp  # attach hyperparameters to model
     model.gr = 1.0  # iou loss ratio (obj_loss = 1.0 or iou)
-    model.load_state_dict(s)
+    #model.load_state_dict(s)
     model.class_weights = labels_to_class_weights(dataset.labels, nc).to(device)  # attach class weights
     model.names = names
 
