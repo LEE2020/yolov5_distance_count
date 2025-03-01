@@ -35,7 +35,3 @@ JUST RUN video_remain.py and you can get what you want.
 
 if this project can help you, give me a star,plzzzzzz! 
 
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=davidfrz/yolov5_distance_count&type=Date)](https://star-history.com/#davidfrz/yolov5_distance_count&Date)

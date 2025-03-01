@@ -35,14 +35,14 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 from dis_count import *
 from utils.datasets import *
 
+
 # 设置model
-
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-half = device.type != 'cpu'  # half precision only supported on CUDA
-
+device = torch.device('cpu')
+half = device.type != True  # half precision only supported on CUDA
+half = False
 model = attempt_load('yolov5s.pt', map_location=device)  # load FP32 model
-imgsz = check_img_size(640, s=model.stride.max())  # check img_size
-
+#imgsz = check_img_size(640, s=model.stride.max())  # check img_size
+imgsz = check_img_size(2560, s=model.stride.max())  # check img_size
 if half:
     model.half()  # to FP16
 
@@ -57,25 +57,40 @@ img01 = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 _ = model(img01.half() if half else img01) if device.type != 'cpu' else None  # run once
 
 cap1 = cv2.VideoCapture(0)
-cap2 = cv2.VideoCapture(3)
+#cap2 = cv2.VideoCapture(2)
+cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 while(True):
 
     imgs = [None] * 1
     imgs2 = [None] * 1
 
-    ref,a=cap1.read()
-    _,b=cap2.read()
+    #ref,a=cap1.read()
+    #_,b=cap2.read()
 
     # cv2.imshow('0', a)
     # cv2.imshow('1', b)
 
-    cap1.grab()
-    cap2.grab()
+    #cap1.grab()
+    #cap2.grab()
 
-    _, imgs[0] = cap1.retrieve()
-    _, imgs2[0] = cap2.retrieve()
-
+    #_, imgs[0] = cap1.retrieve()
+    #_, imgs2[0] = cap2.retrieve()
+    ret, frame = cap1.read()
+    
+    if not ret or frame is None or frame.size == 0:
+        print("错误：无法从摄像头读取到有效帧。")
+        break
+    
+    
+    height, width = frame.shape[:2]
+    # 以宽度中点均分为左右两部分
+    mid = width // 2
+    print(height,width,mid)
+    imgs[0] = frame[:, :mid]   # 左半部分
+    imgs2[0] = frame[:, mid:]  # 右半部分
+    
     img = [letterbox(x, new_shape=640, auto=True)[0] for x in imgs]
     # imgb = [letterbox(x1, new_shape=640, auto=True)[0] for x1 in imgs2]
 
@@ -115,7 +130,8 @@ while(True):
     # dislist=torch.from_numpy(dislist)
     def ved(pred):
         # t0 = time.time()
-        for i, det in enumerate(pred):  # detectiIf you are running on a CPU-only machine, please use torch.load with map_location=torch.device('cpu') to map your storages to the CPU.
+        for i, det in enumerate(pred):  # detections per image
+
             dis_box = dict()
             if True:  # batch_size >= 1
                  s, im0 =  '%g: ' % i, imgs[i].copy()
@@ -147,8 +163,7 @@ while(True):
                     y=int(y.cpu())
                     # print(xyxy)
                     dddd=(dislist[y][x]/5)[-1]
-                    #dddd = dislist[y,x,2]
-                    label = '%s %.2f %.1f  %s' % (names[int(cls)], conf, dddd,pos)
+                    label = '%s %.2f %.2f %s' % (names[int(cls)], conf, dddd,pos)
                     msg={pos:dddd}
                     dis_box.update(msg)
                     # print(label)
@@ -189,10 +204,7 @@ while(True):
     # v2 = vedd(predd)
     dis_box = dict()
     dislist=np.ndarray(0)
-    # 对 v1 图片进行逆时针旋转90度
-    v1_rotated = cv2.rotate(v1, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    cv2.imshow('0', v1_rotated)
-   # cv2.imshow('0', v1)
+    cv2.imshow('0', v1)
     # cv2.imshow('1', v2)
     cv2.imshow('SGNM_disparity', (disp - 0) / 32)
 
