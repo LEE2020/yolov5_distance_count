@@ -23,7 +23,8 @@ R = np.matrix([
 # [ 0.1816969 ,  0.0356684,   0.98270749]])
 T = np.array([-16.339672559387495,0.342232831032356,-1.081531326484493])
 #T = np.array([[ 191562.92778983],[ 112312.20940842], [-846005.8532684 ]])
-size = (640, 480) # 图像尺寸
+#size = (640, 480) # 图像尺寸
+size = (720, 640) # 图像尺寸
 
 # 进行立体更正
 R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = cv2.stereoRectify(left_camera_matrix, left_distortion,
