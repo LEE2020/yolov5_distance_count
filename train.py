@@ -33,12 +33,8 @@ from utils.plots import plot_images, plot_labels, plot_results, plot_evolution
 from utils.torch_utils import ModelEMA, select_device, intersect_dicts, torch_distributed_zero_first
 #torch.cuda.set_device(1)
 torch.cuda.init()
-
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-
 logger = logging.getLogger(__name__)
-
 try:
     import wandb
 except ImportError:
