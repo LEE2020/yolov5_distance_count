@@ -1,6 +1,6 @@
 import cv2
 from ultralytics import YOLO
-
+# 在静态的图片上检测yoloV5微调后的模型效果
 # 步骤1：加载模型
 model = YOLO('./runs/detect/train4/weights/best.pt')  # YOLOv5 微调模型文件‌:ml-citation{ref="1,2" data="citationList"}
 
