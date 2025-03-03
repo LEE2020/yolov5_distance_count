@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2025/3/3 15:00
+# @Author  : brigg
+# @Email   :
+# @File    : model_used.py
+# @Software: VS Code
+
 import torch
 import cv2
 from PIL import Image
@@ -5,11 +12,14 @@ import pandas as pd
 import numpy as np
 import random
 from ultralytics import YOLO
+from models.yolo import Model
 # 加载预训练 YOLOv5 模型（通过 torch.hub）
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # 使用 'yolov5s' 小型模型
+#model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # 使用 'yolov5s' 小型模型
 #model = YOLO('./runs/detect/train4/weights/best.pt')
+model = Model('./runs/train/exp21/weights/best.pt')
 
 print(type(model))
+print(model)
 # 读取图像（YOLOv5 支持直接输入文件路径或 OpenCV 格式）
 image = cv2.imread("cloud.jpg")  # 使用 OpenCV 读取图像
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # 转换为 RGB 格式（YOLOv5 要求）
@@ -18,8 +28,7 @@ image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # 转换为 RGB 格式（YOL
 results = model(image_rgb)  # 输入 RGB 格式图像
 print(type(results))
 # 解析检测结果
-#predictions = results.pandas().xyxy  # 提取检测结果的 DataFrame 格式
-predictions = results
+predictions = results.pandas().xyxy[0]  # 提取检测结果的 DataFrame 格式
 # 绘制边界框和标签
 # 定义列名  
 columns = ["xmin", "ymin", "xmax", "ymax", "confidence", "class", "name"]  
