@@ -14,9 +14,12 @@ import random
 from ultralytics import YOLO
 from models.yolo import Model
 # 加载预训练 YOLOv5 模型（通过 torch.hub）
+# 模型导入的方式 1）官方导入方式 torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+# 模型导入的方式 2）本地导入方式通过构造函数YOLO, YOLO(可能为二进制文件pt、yaml文件) 
+# 模型导入的方式 3）本地导入方式权重二进制文件 torch.load('./runs/train/exp21/weights/best.pt') 通过torch.load 
 #model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # 使用 'yolov5s' 小型模型
 #model = YOLO('./runs/detect/train4/weights/best.pt')
-model = Model('./runs/train/exp21/weights/best.pt')
+model = torch.load('./runs/train/exp21/weights/best.pt')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
 print(type(model))
 print(model)
