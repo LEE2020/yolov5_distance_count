@@ -1,3 +1,10 @@
+# https://blog.csdn.net/oJiWuXuan/article/details/107558286
+# 自己实现基于yolo模型对特定目标进行识别
+# 官方模型地址 https://github.com/ultralytics/yolov5
+# 官方源码地址 https://github.com/ultralytics/yolov5/tags
+# 制作数据集 标注工具1：） https://github.com/ultralytics/yolov5/tags
+# 标注工具2：）http://www.jinglingbiaozhu.com/  参考博文；https://blog.csdn.net/youmumzcs/article/details/79657132
+
 import torch
 model = torch.load('yolov5s.pt')['model']  # 加载 .pt 文件中的模型对象
 #print(model)
