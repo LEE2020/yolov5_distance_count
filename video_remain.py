@@ -42,7 +42,7 @@ half = device.type != True  # half precision only supported on CUDA
 half = False
 model = attempt_load('yolov5s.pt', map_location=device)  # load FP32 model
 #imgsz = check_img_size(640, s=model.stride.max())  # check img_size
-imgsz = check_img_size(1280, s=model.stride.max())  # check img_size
+imgsz = check_img_size(640, s=model.stride.max())  # check img_size
 if half:
     model.half()  # to FP16
 
@@ -59,7 +59,7 @@ _ = model(img01.half() if half else img01) if device.type != 'cpu' else None  # 
 cap1 = cv2.VideoCapture(0)
 #cap2 = cv2.VideoCapture(2)
 cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
 
 while(True):
 
@@ -162,7 +162,8 @@ while(True):
                     x=int(x.cpu())
                     y=int(y.cpu())
                     # print(xyxy)
-                    dddd=(dislist[y][x]/5)[-1]
+                    #dddd=(dislist[y][x]/5)[-1]
+                    dddd = get_depth(dislist, y, x)
                     label = '%s %.2f %.2f %s' % (names[int(cls)], conf, dddd,pos)
                     msg={pos:dddd}
                     dis_box.update(msg)
