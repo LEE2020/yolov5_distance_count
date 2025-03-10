@@ -59,7 +59,9 @@ _ = model(img01.half() if half else img01) if device.type != 'cpu' else None  # 
 cap1 = cv2.VideoCapture(0)
 #cap2 = cv2.VideoCapture(2)
 cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+# 将分辨率改成640，解决图片出边界的问题
+#cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+cap1.set(cv2.CAP_PROP_FRAME_HEIGHT,640)
 
 while(True):
 
