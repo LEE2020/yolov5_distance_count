@@ -1,0 +1,13 @@
+train: G:/---.v6i.yolov11/train/images
+val: G:/---.v6i.yolov11/valid/images
+test: G:/---.v6i.yolov11/test/images
+
+nc: 1
+names: ['cloud']
+
+roboflow:
+  workspace: project-koaaf
+  project: -anki3
+  version: 6
+  license: Public Domain
+  url: https://universe.roboflow.com/project-koaaf/-anki3/dataset/6

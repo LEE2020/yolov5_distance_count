@@ -1,0 +1,17 @@
+# 配置文件（yolov11-rola.yaml）
+model:
+  backbone:
+    type: yolov11
+  head:
+    type: Detect_RoLA  # 使用自定义检测头 
+  neck:
+    type: C2f_RoLA     # 替换原C2f模块，c2f模块用于特征融合, RoLA是自定义的特征融合模块
+
+training:
+  freeze: ['backbone.*']  # 冻结主干网络，仅训练RoLA适配层和检测头‌:ml-citation{ref="3" data="citationList"}
+  optimizer: AdamW
+  lr: 1e-4
+  lr_head: 1e-3
+  lr_neck: 5e-4
+  batch_size: 32
+  epochs: 50
