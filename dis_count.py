@@ -133,7 +133,12 @@ def dis_co(frame1,frame2):
     return threeD,disp
 def get_depth(threeD: np.ndarray, y: int, x: int) -> float:
     """ 返回相机到物体的垂直距离（单位：米/毫米） """
+    if x < 0 or y < 0:
+        return np.nan
+    if x > 640 or y > 640:
+        return np.nan
     Z = threeD[y, x, 2]/5
+    
     return Z if Z > 0 else np.nan
 
 
